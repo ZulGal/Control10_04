@@ -20,7 +20,7 @@ class Note:
         self.created_at = created_at or datetime.now()
 
     def __str__(self):
-        return f'Заметка №{self.id}: {self.title}'
+        return f'Заметка №{self.id}: {self.title} {self.created_at}'
 
 
 class App:
@@ -61,6 +61,17 @@ class App:
             note.body = body
         print('Заметка изменена!')
 
+    def select(self):
+        year_select = int(input('Введите год создания заметки: '))
+        month_select = int(input('Введите месяц: '))
+        day_select = int(input('Введите день: '))
+             # print(note.created_at.year)
+
+        for note in self.notes:
+            if ((note.created_at.year == year_select)&(note.created_at.month == month_select)&(note.created_at.day == day_select)):
+                print(note)
+        return
+
     def list(self):
         for note in self.notes:
             print(note)
@@ -84,7 +95,7 @@ class App:
 
 app = App()
 app.read_from_file()
-main_instruction = 'Введите команду add, edit, delete, read, list, exit:\n   '
+main_instruction = 'Введите команду add, edit, delete, read, list, select, exit:   '
 command = ''
 
 while command != 'exit':
@@ -99,6 +110,8 @@ while command != 'exit':
         app.delete()
     elif command == 'edit':
         app.edit()
+    elif command == 'select':
+        app.select()
 
 try:
     app.save_to_file()
